@@ -1,6 +1,7 @@
-package com.automation.Pages.Fleet;
+package com.vytrack.pages.fleet;
 
-import com.automation.Pages.AbstractPageBase;
+
+import com.vytrack.pages.AbstractPageBase;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;

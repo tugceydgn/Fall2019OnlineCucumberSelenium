@@ -1,7 +1,7 @@
-package com.automation.Pages;
+package com.vytrack.pages;
 
-import com.automation.Utilities.BrowserUtils;
-import com.automation.Utilities.Driver;
+import com.vytrack.utilities.BrowserUtilities;
+import com.vytrack.utilities.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,7 +32,7 @@ public abstract class AbstractPageBase {
     public AbstractPageBase() { PageFactory.initElements(Driver.getDriver(), this); }
 
     public String getCurrentUserName(){
-        BrowserUtils.waitForPageLoad(10);
+        BrowserUtilities.waitForPageToLoad(10);
         wait.until(ExpectedConditions.visibilityOf(currentUser));
         return currentUser.getText().trim();
     }
@@ -53,10 +53,10 @@ public abstract class AbstractPageBase {
         WebElement moduleElement = driver.findElement(By.xpath(moduleXpath));
 
         Actions actions = new Actions(driver);
-        BrowserUtils.wait(5);
+        BrowserUtilities.waitForPageToLoad(5);
         actions.moveToElement(tabElement).pause(2000).click(moduleElement).build().perform();
 
-        BrowserUtils.wait(5);
+        BrowserUtilities.wait(5);
 
     }
 
