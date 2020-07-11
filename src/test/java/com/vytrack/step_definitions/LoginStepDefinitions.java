@@ -47,8 +47,12 @@ public class LoginStepDefinitions {
         BrowserUtilities.waitForPageToLoad(10);
         BrowserUtilities.wait(2);
         Assert.assertEquals("Dashboard", Driver.getDriver().getTitle());
-        Driver.closeDriver();
+
     }
 
-
+    @When("users enter {string} username and {string} password")
+    public void users_enter_username_and_password(String string, String string2) {
+        System.out.printf("Login with user name %s and %s password\n", string,string2);
+        loginPage.login(string, string2);
+    }
 }
