@@ -1,6 +1,7 @@
 package com.vytrack.runners;
 
 
+import io.cucumber.java.en.Then;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
@@ -11,8 +12,11 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         dryRun = false,
         strict = false,
-        tags = "@login_with_params",
-        plugin = "html:target/cucumber-html-report"
+        tags = "@activities",
+        plugin = {
+                "html:target/cucumber-html-report",
+                "json:target/cucumber.json"
+        }
 )
 public class CucumberRunner {
 
