@@ -1,24 +1,21 @@
-
 package com.vytrack.runners;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
-
 
 @CucumberOptions(
         glue = "com/vytrack/step_definitions",
         features = "src/test/resources",
         dryRun = false,
         strict = false,
-        tags = "@sales_manager",
+//        to exclude smoke test scenarios
+        tags = "not @smoke_test",
         plugin = {
-                "html:target/default-report",
-                "json:target/cucumber1.json",
-                "rerun:target/rerun.txt"
+                "html:target/default-report-for-regression",
+                "json:target/cucumber_regression.json",
+                "rerun:target/rerun_regression.txt"
         }
 
 )
-public class CucumberRunner extends AbstractTestNGCucumberTests {
-
-
+public class RegressionRunner{
 }

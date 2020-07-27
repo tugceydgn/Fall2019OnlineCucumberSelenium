@@ -11,55 +11,72 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 /**
  * This class will be extended by page classes
- * Ant common WebElements/Locators can be stored here
+ * Ant common webelements/locators can be stored here
  * Since navigation menu doesn't belong to particular page
  * We cannot really create a dedicated page class to store
  * elements from that menu
  */
-
-
 public abstract class AbstractPageBase {
     protected WebDriver driver = Driver.getDriver();
-    protected WebDriverWait wait = new WebDriverWait(driver, 15);
+    protected WebDriverWait wait = new WebDriverWait(driver, 25);
 
     @FindBy(css = "#user-menu > a")
     protected WebElement currentUser;
 
+    @FindBy(css = "[class='btn-group pull-right'] > button")
+    protected WebElement saveAndClose;
 
-    public AbstractPageBase() { PageFactory.initElements(Driver.getDriver(), this); }
+    public AbstractPageBase() {
+        PageFactory.initElements(driver, this);
+    }
 
-    public String getCurrentUserName(){
+    public void clickOnSaveAndClose() {
+        BrowserUtilities.wait(3);
+        wait.until(ExpectedConditions.elementToBeClickable(saveAndClose)).click();
+        waitForLoaderMask();
+    }
+
+    public String getCurrentUserName() {
         BrowserUtilities.waitForPageToLoad(10);
         wait.until(ExpectedConditions.visibilityOf(currentUser));
         return currentUser.getText().trim();
     }
 
+
     /**
-     * Method for Vytrack navigation. Provide tab name and module name to navigate
-     * @param tabName, like Dashboards, Fleet or Customers
-     * @param moduleName, like Vehicles Odometer and Vehicles Costs
+     * Method for vytrack navigation. Provide tab name and module name to navigate
+     *
+     * @param tabName,    like Dashboards, Fleet or Customers
+     * @param moduleName, like Vehicles, Vehicles Odometer and Vehicles Costs
      */
-
-
-    public void navigateTo(String tabName, String moduleName){
-
-        String tabNameXpath = "//span[@class='title title-level-1' and contains(text(),'"+tabName+"')]";
-        String moduleXpath = "//span[@class='title title-level-2' and text()='" + moduleName+"']";
+    public void navigateTo(String tabName, String moduleName) {
+        String tabNameXpath = "//span[@class='title title-level-1' and contains(text(),'" + tabName + "')]";
+        String moduleXpath = "//span[@class='title title-level-2' and text()='" + moduleName + "']";
 
         WebElement tabElement = driver.findElement(By.xpath(tabNameXpath));
         WebElement moduleElement = driver.findElement(By.xpath(moduleXpath));
 
         Actions actions = new Actions(driver);
-        BrowserUtilities.waitForPageToLoad(5);
-        actions.moveToElement(tabElement).pause(2000).click(moduleElement).build().perform();
 
-        BrowserUtilities.wait(5);
+        BrowserUtilities.wait(4);
 
+        actions.moveToElement(tabElement).
+                pause(2000).
+                click(moduleElement).
+                build().perform();
+
+        //increase this wait rime if still failing
+        BrowserUtilities.wait(4);
+        waitForLoaderMask();
     }
 
-
-
+    /**
+     * this method can be used to wait until that terrible loader mask (spinning wheel) will be gone
+     * if loader mask is present, website is loading some data and you cannot perform any operations
+     */
+    public void waitForLoaderMask() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("[class*='loader-mask']")));
+    }
 }
