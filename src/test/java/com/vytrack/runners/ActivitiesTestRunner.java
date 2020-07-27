@@ -15,6 +15,6 @@ import io.cucumber.testng.CucumberOptions;
         }
 
 )
-public class ActivitiesTestRunner extends AbstractTestNGCucumberTests {
+public class ActivitiesTestRunner {
 
 }

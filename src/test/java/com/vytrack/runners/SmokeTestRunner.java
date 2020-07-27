@@ -17,5 +17,5 @@ import io.cucumber.testng.CucumberOptions;
         }
 
 )
-public class SmokeTestRunner extends AbstractTestNGCucumberTests {
+public class SmokeTestRunner  {
 }
